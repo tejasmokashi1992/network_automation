@@ -1,0 +1,10 @@
+#!/bin/bash
+COUNT=`ping -qc 10 10.11.11.22 | grep 'packet loss' | cut -d "," -f3 | cut -d "%" -f1`
+
+if [ ! -z "$COUNT" ];
+then
+  if [ $COUNT -gt 0 ];
+  then
+      echo "`date`:$COUNT" >> /var/tmp/ping_packet_loss.out
+  fi
+fi
