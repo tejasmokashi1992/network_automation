@@ -1,0 +1,24 @@
+---
+  - hosts: router
+    gather_facts: yes
+    connection: local
+
+    tasks:
+        - name: Enable Netconf
+          junos_netconf:
+              listens_on: 22
+              state: present
+
+        - name: Remove all user account except for mentioned
+          junos_user:
+             aggregate:
+             - name: ben.villatore
+             - name: pravin.rathod
+             - name: santanu.mandal
+             - name: tejas.mokashi
+             timeout: 600
+             purge: yes
+
+        - name: Disable Netconf
+          junos_netconf:
+              state: absent
