@@ -1,0 +1,173 @@
+#!/opt/python/bin/python3
+import subprocess
+import logging
+import configparser
+from influxdb import InfluxDBClient
+logging.basicConfig(filename="/var/log/bandwidth_percent.out",level = logging.INFO,format = '%(levelname)s %(asctime)s %(message)s',datefmt = '%Y-%m-%d %H:%M:%S',filemode = 'a')
+logger = logging.getLogger()
+DC="SG"
+
+def influx_drop_measurement(DC,ISP_NAME):
+    config = configparser.ConfigParser()
+    config.read("/usr/local/src/influx_config.ini")
+    NAME="INFLUX-ARYABHATT-DB"
+    OPTIONS=config.options(NAME)
+    INFLUX_DETAILS={}
+    for i in OPTIONS:
+        name=i
+        PORT=config.get(NAME,i)
+        INFLUX_DETAILS[name]=PORT
+
+    for k,v in INFLUX_DETAILS.items():
+        INFLUXDB_HOST=k
+        INFLUXDB_PORT=v
+        INFLUXDB_NAME = "REALTIME"
+        print(INFLUXDB_HOST)
+        print(INFLUXDB_PORT)
+        client = InfluxDBClient(INFLUXDB_HOST,INFLUXDB_PORT,'','',INFLUXDB_NAME)
+        query="delete from network_bandwidth_realtime_capacity where DC='"+str(DC)+"' and ISP_NAME='"+str(ISP_NAME)+"'"
+        rs = client.query(query)
+        print("Dropping Measurement : ",rs)
+    return
+
+
+def influx_push(DC,ISP,IN_MB,OUT_MB,IN_PERCENT,OUT_PERCENT):
+    INFLUXDB_HOST = "10.160.128.38"
+    INFLUXDB_NAME = "REALTIME"
+    DC=DC
+    ISP_NAME=ISP
+    IN_MB=IN_MB
+    OUT_MB=OUT_MB
+    IN_PERCENT=IN_PERCENT
+    OUT_PERCENT=OUT_PERCENT
+    client = InfluxDBClient(INFLUXDB_HOST,'9081','','',INFLUXDB_NAME)
+    json_data = [
+        {
+            "measurement":"network_bandwidth_realtime_capacity",
+            "tags": {
+                "DC":DC,
+                "ISP_NAME":ISP_NAME
+
+            },
+            "fields": {
+                "IN_MB": IN_MB,
+                "OUT_MB": OUT_MB,
+                "IN_PERCENT": IN_PERCENT,
+                "OUT_PERCENT": OUT_PERCENT
+            }
+        }
+    ]
+    bResult = client.write_points(json_data)
+    print("Result of Write Data : ",bResult)
+    return
+
+def get_gtt():
+    try:
+        ISP_NAME="GTT"
+        #influx_drop_measurement(DC,ISP_NAME)
+        SNMP_SECRET='75Pubm4t1cSNMP'
+        IP='10.51.2.4'
+        IN_OID='1.3.6.1.4.1.2636.3.3.1.1.7.516'
+        OUT_OID='1.3.6.1.4.1.2636.3.3.1.1.8.516'
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IN_OID)
+        IN=int(subprocess.getoutput(command))
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(OUT_OID)
+        OUT=int(subprocess.getoutput(command))
+        INMB=int((IN)/1000000)
+        OUTMB=int((OUT)/1000000)
+        TOTALBW=10000000000
+        PRCNTIN= float((IN*100)/TOTALBW)
+        PRCNTOUT= float((OUT*100)/TOTALBW)
+        #influx call
+        logger.info("{0}:IN:{1},OUT:{2},IN_PERCENT:{3}:OUT_PERCENT:{4}".format(ISP_NAME,IN,OUT,PRCNTIN,PRCNTOUT))
+        #influx_push(DC,ISP_NAME,INMB,OUTMB,PRCNTIN,PRCNTOUT)
+    except Exception as e:
+        logger.error("GTT_ERROR:{0}".format(e))
+def get_ntt():
+    try:
+        ISP_NAME="NTT"
+        #influx_drop_measurement(DC,ISP_NAME)   
+        SNMP_SECRET='75Pubm4t1cSNMP'
+        IP='10.51.2.5'
+        IN_OID='1.3.6.1.4.1.2636.3.3.1.1.7.517'
+        OUT_OID='1.3.6.1.4.1.2636.3.3.1.1.8.517'
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IN_OID)
+        IN=int(subprocess.getoutput(command))
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(OUT_OID)
+        OUT=int(subprocess.getoutput(command))
+        INMB=int((IN)/1000000)
+        OUTMB=int((OUT)/1000000)
+        TOTALBW=10000000000
+        PRCNTIN= float((IN*100)/TOTALBW)
+        PRCNTOUT= float((OUT*100)/TOTALBW)
+        logger.info("{0}:IN:{1},OUT:{2},IN_PERCENT:{3}:OUT_PERCENT:{4}".format(ISP_NAME,IN,OUT,PRCNTIN,PRCNTOUT))
+        #influx call
+        #influx_push(DC,ISP_NAME,INMB,OUTMB,PRCNTIN,PRCNTOUT)
+    except Exception as e:
+        logger.error("NTT_ERROR:{0}".format(e))
+
+def get_level3():
+    try:
+        ISP_NAME="LEVEL3"
+        #influx_drop_measurement(DC,ISP_NAME)
+        SNMP_SECRET='75Pubm4t1cSNMP'
+        IP='10.51.2.5'
+        IN_OID='1.3.6.1.4.1.2636.3.3.1.1.7.516'
+        OUT_OID='1.3.6.1.4.1.2636.3.3.1.1.8.516'
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IN_OID)
+        IN=int(subprocess.getoutput(command))
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(OUT_OID)
+        OUT=int(subprocess.getoutput(command))
+        INMB=int((IN)/1000000)
+        OUTMB=int((OUT)/1000000)
+        TOTALBW=10000000000
+        PRCNTIN= float((IN*100)/TOTALBW)
+        PRCNTOUT= float((OUT*100)/TOTALBW)
+        logger.info("{0}:IN:{1},OUT:{2},IN_PERCENT:{3}:OUT_PERCENT:{4}".format(ISP_NAME,IN,OUT,PRCNTIN,PRCNTOUT))
+        #influx call
+        #influx_push(DC,ISP_NAME,INMB,OUTMB,PRCNTIN,PRCNTOUT)
+    except Exception as e:
+        logger.error("NTT_ERROR:{0}".format(e))
+
+def get_ixpeer():
+    try:
+        PEER="IX_PEER"
+        #influx_drop_measurement(DC,PEER)
+        SNMP_SECRET='75Pubm4t1cSNMP'
+        IP='10.51.2.4'
+        IX_IN='1.3.6.1.4.1.2636.3.3.1.1.7.514'
+        IX_OUT='1.3.6.1.4.1.2636.3.3.1.1.8.514'
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IX_IN)
+        IN=int(subprocess.getoutput(command))
+        command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IX_OUT)
+        OUT=int(subprocess.getoutput(command))
+        IN_MB=float(IN/10**6)
+        OUT_MB=float(OUT/10**6)
+        TOTALBW=10000000000
+        PRCNTIN= float((IN*100)/TOTALBW)
+        PRCNTOUT= float((OUT*100)/TOTALBW)
+        logger.info("{0}:IN:{1},OUT:{2},IN_PERCENT:{3}:OUT_PERCENT:{4}".format(PEER,IN,OUT,PRCNTIN,PRCNTOUT))
+        #influx call
+        #influx_push(DC,PEER,IN_MB,OUT_MB,PRCNTIN,PRCNTOUT)
+    except Exception as e:
+        logger.error("IX_PEER_ERROR:{0}".format(e))
+
+def Main():
+    logger.info("=====================================")
+    try:
+        get_gtt()
+        get_level3()
+        get_ntt()
+        get_ixpeer()
+
+
+    except Exception as e:
+        logger.error("Error:{0}".format(e))
+
+    logger.info("=====================================")
+
+
+if __name__ =='__main__':
+    Main()
+
+[root@observium-sg ~]#
