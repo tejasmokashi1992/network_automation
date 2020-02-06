@@ -1,0 +1,48 @@
+root@L947:/home/tejas# cat configpush.yml
+---
+  - hosts: router
+    gather_facts: yes
+    connection: local
+
+    tasks:
+      - name: Enable Netconf
+        junos_netconf:
+           state: present
+
+      - name: Vlan Configuration
+        junos_config:
+           src_format: set
+           src: vlan.set
+        register: output
+
+      - name: Group Configuration
+        junos_config:
+           src_format: set
+           src: group_config.set
+        register: output
+
+      - name: Interface Configuration
+        junos_config:
+           src_format: set
+           src: interface_config.set
+        register: output
+
+      - name: STP Configuration
+        junos_config:
+           src_format: set
+           src: stp_config.set
+        register: output
+
+      - name: Other Configuration
+        junos_config:
+           src_format: set
+           src: other_config.set
+        register: output
+
+      - name: Disable Netconf
+        junos_netconf:
+           state: absent
+
+
+ansible-playbook -vvvvv -i devices show_commands.yml -u tejas.mokashi -k
+
