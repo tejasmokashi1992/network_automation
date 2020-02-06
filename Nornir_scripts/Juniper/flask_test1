@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+from nornir import InitNornir
+from flask import Flask, jsonify
+import json
+from nornir.plugins.tasks.networking import napalm_cli
+from nornir.plugins.tasks.networking import napalm_get
+from nornir.plugins.functions.text import print_result
+
+app = Flask(__name__)
+
+
+def get_nr():
+
+
+    return InitNornir(
+        inventory={
+            "options": {
+                "host_file": "inventory/hosts.yaml",
+                "group_file": "inventory/groups.yaml",
+                "defaults_file": "inventory/defaults.yaml",
+            }
+        }
+    )
+
+
+def to_json(results):
+    return (jsonify({host: result[0].result for host, result in results.items()}))
+    #print({host: result.result['facts']['os_version'] for host, result in results.items()})
+
+@app.route("/get_cli")
+def get_cli():
+    nr = get_nr()
+    r = nr.run(task=napalm_cli, commands=['show version'])
+    return to_json(r)
+    #print_result(r)
+
+@app.route("/get_facts")
+def get_facts():
+    nr = get_nr()
+    r = nr.run(task=napalm_get, getters=["facts"])
+    return to_json(r)
+    #print_result(r)
+
+
+if __name__ == '__main__':
+    app.run(debug=True,host="192.168.0.26",port=9091)
