@@ -1,0 +1,25 @@
+---
+  - hosts: router
+    gather_facts: yes
+    connection: local
+
+    tasks:
+        - name: Enable Netconf
+          junos_netconf:
+              state: present
+
+        - name: Create user account
+          junos_user:
+             aggregate:
+             - {name: ben.villatore, role: super-user, state: present, encrypted_password: $1$/cntzd5P$5PEqqfI8G2mvOaeCWbudm/}
+             - {name: pravin.rathod, role: super-user, state: present, encrypted_password: $1$mkZoUQXw$nlqdkUExERzB6FtSuoUqE.}
+             - {name: santanu.mandal, role: super-user, state: present, encrypted_password: $1$ylB1fFbS$uLxFTc90ekc9iuIPMzp361}
+             - {name: tejas.mokashi, role: super-user, state: present, encrypted_password: $1$NuAZ/ZmJ$SzEZS/DKDfZf5DJcC9IYL/}
+
+        - name: Disable Netconf
+          junos_netconf:
+              state: absent
+...
+
+
+ansible-playbook -vvvvv -i devices show_commands.yml -u tejas.mokashi -k
