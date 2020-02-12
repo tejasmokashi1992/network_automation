@@ -1,0 +1,22 @@
+{% extends "01-base.html"%}
+{% block content %}
+<div class="jumbotron">
+
+
+<h1>Check vlan tag!</h1>
+<p>Please enter rack_num and ru_num.</p>
+<p>
+  Example:
+  rack_num = 631 and
+  ru_num = 18
+</p>
+    <form action="{{url_for('output')}}">
+       <label for="rack_num">RACK_NUM</label>
+        <input type="text" name="rack_num">
+        <label for="ru_num">RU_NUM</label>
+        <input type="text" name="ru_num">
+        <input type="submit" value="Submit">
+    </form>
+
+</div>
+{% endblock %}
