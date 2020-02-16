@@ -6,7 +6,7 @@ from nornir.plugins.tasks.networking import napalm_get
 from nornir.plugins.tasks.networking import netmiko_send_command
 from nornir.plugins.functions.text import print_result
 from nornir.core.filter import F
-
+import ipaddress
 
 nr = InitNornir(
     inventory={
