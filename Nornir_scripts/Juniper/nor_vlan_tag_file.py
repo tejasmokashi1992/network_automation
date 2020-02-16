@@ -21,12 +21,12 @@ nr = InitNornir(
 
 def check_ping(IP):
      try:
-        if IP[0:5] != "10.90":
+        if ipaddress.ip_address(IP) not in ipaddress.ip_network('10.90.0.0/16'):
             print("Server IP {0} is not in range for TY6 DC servers".format(IP))
         else:
             SWITCH = nr.filter(F(hostname="10.91.2.4"))
-            PING = SWITCH.run(task=netmiko_send_command, command_string="ping {0} count 5".format(IP))
-            if "5 packets received" in PING['CS_1'].result or "4 packets received" in PING['CS_1'].result:
+            PING = SWITCH.run(task=napalm_ping, dest=IP)
+            if "success" in PING['CS_1'].result:
                 print("=======================================================")
                 print("Server IP {0} is Pingable".format(IP))
                 ARP = SWITCH.run(task=napalm_get, getters=["arp_table"])
