@@ -24,11 +24,11 @@ nr = InitNornir(
 
 app = Flask(__name__)
 
-#@app.route('/')
-#def index():
-#    return render_template('01-index.html')
+@app.route('/')
+def index():
+    return render_template('01-index.html')
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/fillup_form', methods=['GET','POST'])
 def fillup_form():
     return render_template('01-vlan_tag_form.html')
 
