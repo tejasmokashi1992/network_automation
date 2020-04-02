@@ -22,7 +22,7 @@ junos = nr.filter(F(platform="junos"))
 def audit(task):
     try:
        output = task.run(task=netmiko_send_command, command_string="show configuration | display set | match archival")
-       #print_result(outout)
+       #print_result(output)
        if "transfer-on-commit" not in output.result or "archive-sites" not in output.result:
            print("Error found on :{0}".format(task.host.hostname))
            with open( 'unconfigured_devices', 'a+' ) as audit_out:
