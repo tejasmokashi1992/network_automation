@@ -8,7 +8,7 @@ from nornir.plugins.functions.text import print_result
 
 app = Flask(__name__)
 
-
+#this is a random comment to check git 
 def get_nr():
 
 
