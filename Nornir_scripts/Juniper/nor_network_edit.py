@@ -23,7 +23,7 @@ junos = nr.filter(F(platform="junos"))
 #junos = nr.filter(F(hostname="192.168.1.10"))
 
 def configuration(task):
-	try:
+  try:
        #output = task.run(task=netmiko_send_config, config_file="/home/tejas/day-one-net-toolkit/network_config.txt")
        output = task.run(task=napalm_configure, filename="/home/tejas/day-one-net-toolkit/network_config.txt")
        print("Config done for device :{0}".format(task.host.hostname))
