@@ -5,6 +5,7 @@ from nornir.plugins.tasks.files import write_file
 from nornir.plugins.tasks.networking import netmiko_send_command
 from nornir.plugins.functions.text import print_result
 from nornir.core.filter import F
+import click
 
 nr = InitNornir(
     inventory={
@@ -35,8 +36,8 @@ def audit(task, command, first_string):
         print("ERROR:{0}".format(e))
 
 def main():
-    command = input("Enter the command in display set: ")
-    first_string = input("Enter string you want to be matched: ")
+    command = click.prompt("Enter the command in display set")
+    first_string = click.prompt("Enter string you want to be matched")
     out=junos.run(task=audit, command=command, first_string=first_string, num_workers=20)
     #print_result(out)
 
