@@ -36,6 +36,7 @@ def audit(task, command, first_string):
         print("ERROR:{0}".format(e))
 
 def main():
+    open("unconfigured_devices", "w").close()
     command = click.prompt("Enter the command in display set")
     first_string = click.prompt("Enter string you want to be matched")
     out=junos.run(task=audit, command=command, first_string=first_string, num_workers=20)
