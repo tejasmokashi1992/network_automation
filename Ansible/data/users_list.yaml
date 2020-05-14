@@ -1,0 +1,8 @@
+---
+user_details:
+  - name: 'test.user1'
+    password: 'test1@123'
+  - name: 'test.user2'
+    password: 'test2@123'
+  - name: 'test.user3'
+    password: 'test3@123'
