@@ -1,0 +1,27 @@
+- hosts: localhost
+  vars:
+   host: "10.51.2.9"
+   username: "tejas.mokashi"
+   password: "My_password"
+   vdom: "root"
+  vars_files:
+      - users_list.yaml
+
+  tasks:
+  - name: Configure local users.
+    fortios_user_local:
+      host:  "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vdom:  "{{ vdom }}"
+      ssl_verify: "False"
+      https: "True"
+      state: "present"
+      user_local:
+        name: "{{ item.name }}"
+        passwd: "{{ item.password }}"
+        sms_server: "fortiguard"
+        status: "enable"
+        two_factor: "disable"
+        type: "password"
+    with_items: "{{ user_details  }}"
