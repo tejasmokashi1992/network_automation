@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+#Forked from Daniel Teycheney/writememe
 from nornir import InitNornir
 from nornir.plugins.tasks.networking import napalm_get
 from nornir.plugins.tasks.files import write_file
