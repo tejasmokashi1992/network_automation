@@ -18,7 +18,7 @@
     delegate_to: localhost
 
   - name: Genrate template
-    shell: sudo  ansible-playbook /usr/local/src/PLAYBOOKS/scripts/iterate.yaml
+    shell: sudo  ansible-playbook /usr/local/src/PLAYBOOKS/scripts/csv_to_yaml.yaml
     delegate_to: localhost
 
   - name: Include yaml file created in above task
