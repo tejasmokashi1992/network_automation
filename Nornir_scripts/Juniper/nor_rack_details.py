@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+# This is test script made for some testing.
 import json
 from nornir import InitNornir
 from nornir.plugins.tasks.files import write_file
