@@ -53,7 +53,7 @@
 
   - name: Sending password file on email
     mail:
-      host: pubmatic-com.mail.protection.outlook.com
+      host: my_organization.protection.outlook.com
       port: 25
       from: DC-Network-Ops@pubmatic.com
       to: tejas.mokashi@pubmatic.com
