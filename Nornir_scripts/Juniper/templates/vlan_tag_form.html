@@ -1,4 +1,4 @@
-{% extends "01-base.html"%}
+{% extends "base.html"%}
 {% block content %}
 <div class="jumbotron">
 
@@ -10,7 +10,7 @@
   rack_num = 631 and
   ru_num = 18
 </p>
-    <form action="{{url_for('output')}}">
+    <form action="{{url_for('output_vlantag')}}">
        <label for="rack_num">RACK_NUM</label>
         <input type="text" name="rack_num">
         <label for="ru_num">RU_NUM</label>
