@@ -26,24 +26,24 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('01-index.html')
+    return render_template('index.html')
 
-@app.route('/fillup_form', methods=['GET','POST'])
-def fillup_form():
-    return render_template('01-vlan_tag_form.html')
+@app.route('/vlantagform', methods=['GET','POST'])
+def vlantag_form():
+    return render_template('vlan_tag_form.html')
 
-@app.route('/output', methods=['GET','POST'])
-def output():
+@app.route('/outputvlantag', methods=['GET','POST'])
+def output_vlantag():
     RACK_NUM = request.args.get('rack_num')
     RU_NUM = request.args.get('ru_num')
 
     VLAN_TAG,status_code=check_tag(RACK_NUM, RU_NUM)
 
-    return render_template('01-output.html', VLAN_TAG=VLAN_TAG)
+    return render_template('output_vlantag.html', VLAN_TAG=VLAN_TAG)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('01-404.html'), 404
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
