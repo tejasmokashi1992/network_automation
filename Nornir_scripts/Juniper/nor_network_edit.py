@@ -36,6 +36,7 @@ def configuration(task):
 
 def main():
     out=junos.run(task=configuration, num_workers=10)
+    #print_result(out)
 
 if __name__ == '__main__':
     main()
