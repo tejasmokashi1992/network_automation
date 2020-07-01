@@ -21,6 +21,7 @@ nr = InitNornir(
 
 junos = nr.filter(F(platform="junos"))
 #junos = nr.filter(F(hostname="192.168.1.10"))
+#junos = nr.filter(F(name="CR_1"))
 
 def configuration(task):
   try:
