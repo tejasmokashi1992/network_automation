@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import json
+
 from nornir import InitNornir
-from nornir.plugins.tasks.files import write_file
-from nornir.plugins.tasks.networking import netmiko_send_command
+from nornir.plugins.tasks.networking import netmiko_send_command, napalm_cli
+from nornir_scrapli.tasks import send_command as scrapli_send_command
 from nornir.plugins.functions.text import print_result
 from nornir.core.filter import F
 import click
@@ -24,6 +24,8 @@ junos = nr.filter(F(platform="junos"))
 def audit(task, command, find_string):
     try:
        output = task.run(task=netmiko_send_command, command_string=command)
+       #output = task.run(task=scrapli_send_command, command=command)
+       #output = task.run(task=napalm_cli, commands=list(command))
        #print_result(output)
        if find_string not in output.result:
            print("Desired string not found on :{0}".format(task.host.hostname))
