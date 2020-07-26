@@ -1,0 +1,28 @@
+---
+TOR_101:
+    hostname: 192.168.50.11
+    groups:
+        - junos
+    data:
+        role: TOR
+        
+TOR_102:
+    hostname: 192.168.50.12
+    groups:
+        - junos
+    data:
+        role: TOR
+
+TOR_103:
+    hostname: 192.168.50.13
+    groups:
+        - junos
+    data:
+        role: TOR
+        
+R1:
+    hostname: 192.168.50.10
+    groups:
+        - junos
+    data:
+        role: corerouter
