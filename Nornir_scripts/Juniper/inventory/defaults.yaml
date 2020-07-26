@@ -1,0 +1,7 @@
+username: tejas.mokashi
+password: junos@123
+connection_options:
+    netconf:
+       extras:
+           allow_agent: False
+           hostkey_verify: False  
