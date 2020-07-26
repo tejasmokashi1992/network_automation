@@ -1,0 +1,10 @@
+---
+#ios:
+#   platform: ios
+#    username: xyz
+#    password: xyz
+
+junos:
+    platform: junos
+    #username: tejas.mokashi
+    #password: Praneel@2018
