@@ -32,7 +32,7 @@ def audit(task, command, find_string):
 
 def main():
     nr = InitNornir(config_file="config.yaml")
-    open("unconfigured_devices", "w").close()
+    open("non_compliant_devices", "w").close()
     print("\n"+"**********"+"[u cyan]Welcome to Network Audit Script[/u cyan]"+"**********"+"\n\n")
     dev_role = click.prompt(click.style("Enter device type for audit:", fg='yellow'),
             type=click.Choice(['TOR', 'corerouter', 'coreswitch', 'all'],
