@@ -8,7 +8,6 @@ from nornir.core.filter import F
 import click
 from rich import print
 
-
 #junos = nr.filter(F(platform="junos") & F(role="TOR"))
 #junos = nr.filter(F(hostname="192.168.1.10"))
 #junos = nr.filter(F(name="CR_1"))
@@ -34,13 +33,14 @@ def main():
     nr = InitNornir(config_file="config.yaml")
     open("non_compliant_devices", "w").close()
     print("\n"+"**********"+"[u cyan]Welcome to Network Audit Script[/u cyan]"+"**********"+"\n\n")
+    
     dev_role = click.prompt(click.style("Enter device type for audit:", fg='yellow'),
             type=click.Choice(['TOR', 'corerouter', 'coreswitch', 'all'],
                 case_sensitive=True))
     command = click.prompt(click.style("Enter the desired command ", fg='bright_magenta'))
     find_string = click.prompt(click.style("Enter string or list of comma seperated strings to be matched", fg='bright_blue')).split(',')
+    
     print(50*"#")
-
     if dev_role == "all":
         junos = nr.filter(F(platform="junos"))
         out = junos.run(task=audit, command=command, find_string=find_string, num_workers=20)
