@@ -23,7 +23,7 @@ def audit(task, command, find_string):
            print("[bright_green] Done checking: {0} [/bright_green]".format(task.host.hostname))
        else:
            print("[bright_red] Desired string not found on: {0} [/bright_red]".format(task.host.hostname))
-           with open( 'unconfigured_devices', 'a+' ) as audit_out:
+           with open( 'non_compliant_devices', 'a+' ) as audit_out:
                audit_out.write(task.host.hostname+"\n")
 
     except Exception as e:
