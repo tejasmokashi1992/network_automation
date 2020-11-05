@@ -58,3 +58,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+Usage:
+=======================
+command[check_bw_gtt]=/usr/lib64/nagios/plugins/pub/check_bandwidth.py --ip 10.111.2.50 --in_oid .1.3.6.1.4.1.2636.3.3.1.1.7.556 --out_oid .1.3.6.1.4.1.2636.3.3.1.1.8.556 --speed 1.3.6.1.2.1.31.1.1.1.15.556
+command[check_bw_Level3]=/usr/lib64/nagios/plugins/pub/check_bandwidth.py --ip 10.111.2.51 --in_oid .1.3.6.1.4.1.2636.3.3.1.1.7.558 --out_oid .1.3.6.1.4.1.2636.3.3.1.1.8.558 --speed 1.3.6.1.2.1.31.1.1.1.15.558
