@@ -16,7 +16,7 @@ def audit(device):
             'device_type': 'juniper',
             'ip': ip_address_of_device,
             'username': 'net.ops',
-            'password': 'NetOps@321'
+            'password': 'NetOps@111'
         }
         try:
             net_connect = ConnectHandler(**junos_device)
