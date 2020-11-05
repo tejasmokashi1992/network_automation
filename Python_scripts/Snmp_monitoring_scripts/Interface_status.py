@@ -40,3 +40,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+Usage:
+================================
+command[check_TS1-to-OOB_Equinix_Connect]=/usr/lib64/nagios/plugins/pub/interface_status.py --ip 10.91.2.70 --oid .1.3.6.1.2.1.2.2.1.8.3
