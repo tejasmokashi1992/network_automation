@@ -40,3 +40,10 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+Usage:
+==============
+command[check_fortinet_memory]=/usr/lib64/nagios/plugins/pub/fortinet.py --ip 10.111.2.9 --oid 1.3.6.1.4.1.12356.101.4.1.4.0 --threshold 75
+command[check_fortinet_cpu]=/usr/lib64/nagios/plugins/pub/fortinet.py --ip 10.111.2.9 --oid 1.3.6.1.4.1.12356.101.4.1.3.0 --threshold 80
+command[check_fortinet_sessions]=/usr/lib64/nagios/plugins/pub/fortinet.py --ip 10.111.2.9 --oid 1.3.6.1.4.1.12356.101.4.1.8.0 --threshold 1000000
