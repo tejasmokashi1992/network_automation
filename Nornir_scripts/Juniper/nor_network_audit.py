@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 from nornir import InitNornir
-from nornir.plugins.tasks.networking import netmiko_send_command, napalm_cli
-from nornir_scrapli.tasks import send_command as scrapli_send_command
-from nornir.plugins.functions.text import print_result
+from nornir_netmiko.tasks import netmiko_send_command
+from nornir_utils.plugins.functions import print_result
+from nornir_napalm.plugins.tasks import napalm_get
 from nornir.core.filter import F
 import click
 from rich import print
@@ -33,23 +33,23 @@ def main():
     nr = InitNornir(config_file="config.yaml")
     open("non_compliant_devices", "w").close()
     print("\n"+"**********"+"[u cyan]Welcome to Network Audit Script[/u cyan]"+"**********"+"\n\n")
-    
+
     dev_role = click.prompt(click.style("Enter device type for audit:", fg='yellow'),
             type=click.Choice(['TOR', 'corerouter', 'coreswitch', 'all'],
                 case_sensitive=True))
     command = click.prompt(click.style("Enter the desired command ", fg='bright_magenta'))
     find_string = click.prompt(click.style("Enter string or list of comma seperated strings to be matched", fg='bright_blue')).split(',')
-    
+
     print(50*"#")
     if dev_role == "all":
         junos = nr.filter(F(platform="junos"))
-        out = junos.run(task=audit, command=command, find_string=find_string, num_workers=20)
+        out = junos.run(task=audit, command=command, find_string=find_string)
         print(50*"#")
     else:
         junos = nr.filter(F(role="{0}".format(dev_role)))
-        out = junos.run(task=audit, command=command, find_string=find_string, num_workers=20)
+        out = junos.run(task=audit, command=command, find_string=find_string)
         print(50*"#")
-    #print_result(out)
+    print_result(out)
 
 if __name__ == '__main__':
     main()
