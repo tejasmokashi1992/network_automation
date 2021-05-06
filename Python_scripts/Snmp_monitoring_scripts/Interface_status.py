@@ -38,7 +38,7 @@ def get_status(IP, OID):
             sys.exit(2)
 
 def main():
-    # create a object from argparse module.
+    # create a object from argparse.
     parser = argparse.ArgumentParser()
     # make a input option to accept IP address.
     parser.add_argument('--ip')
