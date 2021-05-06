@@ -7,4 +7,4 @@
 junos:
     platform: junos
     #username: tejas.mokashi
-    #password: Praneel@2018
+    #password: mypassword
