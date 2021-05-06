@@ -17,7 +17,8 @@ def get_status(IP, OID):
         command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(OID)
         # Run above command on bash shell with subprocess.
         STATUS=(subprocess.getoutput(command))
-
+        
+        # if STATUS is empty the print unable to retrive snmp info.
         if not STATUS:
             MSG="Unable to retrieve SNMP info."
             print("CRITICAL:{0}".format(MSG))
