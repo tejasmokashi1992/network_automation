@@ -15,8 +15,7 @@ from nornir.core.filter import F
 import ipaddress
 # Json module for working with Json data.
 import json
-# This module is for printing colorful input or output.
-from rich import print
+
 
 # This is the way to define & initialize the nornir inventory.
 nr = InitNornir(config_file="config.yaml")
