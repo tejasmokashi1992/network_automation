@@ -27,7 +27,8 @@ def check_ping(IP):
         if ipaddress.ip_address(IP) not in ipaddress.ip_network('10.220.0.0/16'):
             print("Server IP {0} is not in range for LHR19 DC servers".format(IP))
         else:
-            SWITCH = nr.filter(F(hostname="10.221.2.4"))
+            # Just change the Core switch Management IP for each DC here.
+            SWITCH = nr.filter(F(hostname="Put Core switch Management_IP"))
             #SWITCH = nr.filter(F(hostname="10.91.2.4") | F(hostname="10.91.2.5"))
             # Ping the server & check if reachable or not.
             PING = SWITCH.run(task=napalm_ping, dest=IP)
@@ -58,8 +59,9 @@ def check_ping(IP):
 def check_lacp_lldp(INTERFACE,MAC):
      try:
     # Find the LLDP neighbor IP from which you received the server MAC.  
-       SWITCH = nr.filter(F(hostname="10.221.2.4"))
-       #SWITCH = nr.filter(F(hostname="10.91.2.4") | F(hostname="10.91.2.5"))
+       # Just change the Core switch Management IP for each DC here.
+       SWITCH = nr.filter(F(hostname="Put Core switch Management_IP"))
+       #SWITCH = nr.filter(F(hostname="Management IP") | F(hostname="Management IP"))
        LACP = SWITCH.run(task=netmiko_send_command, command_string="show lacp interface {0} | display json | no-more".format(INTERFACE))
        LACP_DICT = json.loads(LACP['CS_1'].result)
        LACP_INTERFACE = LACP_DICT["lacp-interface-information-list"][0]["lacp-interface-information"][0]["lag-lacp-state"][0]["name"][0]["data"]
