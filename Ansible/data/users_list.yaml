@@ -1,8 +1,11 @@
 ---
 user_details:
-  - name: 'test.user1'
+  - usermail: 'test.user1@xyz.com'
+    name: 'test.user1'
     password: 'test1@123'
-  - name: 'test.user2'
+  - usermail: 'test.user2@xyz.com'
+    name: 'test.user2'
     password: 'test2@123'
-  - name: 'test.user3'
+  - usermail: 'test.user3@xyz.com'
+    name: 'test.user3'
     password: 'test3@123'
