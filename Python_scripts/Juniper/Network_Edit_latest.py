@@ -9,7 +9,10 @@ import time
 username = input('Enter your SSH username: ')
 password = getpass()
 
-commands_list=['set system archival configuration transfer-on-commit', 'set system archival configuration archive-sites "scp://copy@10.191.2.125:/opt/config_backup" password "AvrY9CBvUnid61jc"','yes', 'commit']
+config_commands=['set system archival configuration transfer-on-commit', 
+'set system archival configuration archive-sites "scp://copy@10.221.2.125:/opt/config_backup" password "AvUnid61jctejas"', 
+'yes', 
+'commit']
 
 class NetworkEdit(Thread):
     def __init__(self,device):
@@ -34,8 +37,8 @@ def edit(device):
             show_compare = net_connect.send_config_set("show | compare")
             #print(show_compare)
             if "The configuration has been changed but not committed" not in show_compare:
-                output = net_connect.send_config_set(commands_list, delay_factor=3)
-                time.sleep(30)
+                output = net_connect.send_config_set(config_commands, cmd_verify=False, delay_factor=3)
+                time.sleep(20)
                 print(output)
                 if "configuration check succeeds" in output or "Exiting configuration mode" in output:
                     print("!!!!!!!!!!!!!Configuration Successful.!!!!!!!!!!!!!")
@@ -61,7 +64,7 @@ def main():
             thread.join()
 
     print("=====================================")
-    print("Done configuring all devices")
+    print("Done checking for all devices")
     print("=====================================")
 
 if __name__ == '__main__':
