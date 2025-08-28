@@ -8,7 +8,7 @@ STATE_CRITICAL=2
 
 def fortinet(IP, OID, THRESHOLD):
     try:
-        SNMP_SECRET='75Pubm4t1cSNMP'
+        SNMP_SECRET='SNMPString'
         command="snmpwalk -v2c -c "+str(SNMP_SECRET)+" "+str(IP)+" "+str(OID)+" | awk '{print $4}'"
         USAGE=int(subprocess.getoutput(command))
         if   USAGE > THRESHOLD:
