@@ -10,7 +10,7 @@ DC='NJR3'
 TIME=time.strftime('%Y-%m-%d_%H:%M:%S')
 BASE_PATH="/var/tmp/"
 FILE_NAME=BASE_PATH+DC+"_"+TIME
-session = Session(hostname='10.191.2.9', community='75Pubm4t1cSNMP', version=2)
+session = Session(hostname='10.191.2.9', community='SNMPString', version=2)
 system_items = session.walk('1.3.6.1.4.1.12356.101.11.2.1.1.3')
 IP_LIST=[]
 
