@@ -13,7 +13,7 @@ STATE_CRITICAL=2
 
 def get_BW(IP, IN_OID, OUT_OID, SPEED):
     try:
-        SNMP_SECRET='75Pubm4t1cSNMP'
+        SNMP_SECRET='SNMPstring'
         # command to get required data from device.
         command="snmpget -v2c -c "+str(SNMP_SECRET)+" -OQv "+str(IP)+"  "+str(IN_OID)
          # Run above command on bash shell with subprocess & store output in IN variable.
